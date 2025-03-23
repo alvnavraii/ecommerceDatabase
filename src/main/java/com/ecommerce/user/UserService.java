@@ -35,6 +35,13 @@ public class UserService {
         );
     }
 
+    public UserResponse getUserByEmail(String email) {
+        return UserResponse.fromEntity(
+                userRepository.findByEmail(email)
+                        .orElseThrow(() -> new OracleException("ORA-01403", "No se ha encontrado el usuario"))
+        );
+    }
+
     @Transactional
     public UserResponse createUser(UserRequest request) {
         String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
