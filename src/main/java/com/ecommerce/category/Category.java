@@ -8,7 +8,7 @@ import java.util.List;
 import com.ecommerce.common.Audit;
 
 @Entity
-@Table(name = "CATEGORIES", schema = "ecommerce")
+@Table(name = "CATEGORIES")
 @Data
 @Builder
 @NoArgsConstructor

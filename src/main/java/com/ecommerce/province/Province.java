@@ -49,7 +49,7 @@ create table provinces (
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "provinces", schema = "ecommerce")
+@Table(name = "provinces")
 @EqualsAndHashCode
 public class Province {
     @Id

@@ -13,13 +13,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "LANGUAGES", schema = "ecommerce",
+@Table(name = "LANGUAGES", 
        uniqueConstraints = {
            @UniqueConstraint(name = "UK_LANGUAGE_CODE", columnNames = "CODE")
        })
 public class Language {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "language_seq")
+    @SequenceGenerator(name = "language_seq", sequenceName = "language_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "CODE", nullable = false)
@@ -27,6 +28,12 @@ public class Language {
 
     @Column(name = "NAME", nullable = false)
     private String name;
+    
+    @Column(name = "NATIVE_NAME")
+    private String nativeName;
+    
+    @Column(name = "FLAG_URL")
+    private String flagUrl;
 
     @Column(name = "IS_ACTIVE", nullable = false)
     private Boolean isActive;

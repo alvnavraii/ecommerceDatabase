@@ -148,31 +148,8 @@ select * from addresses;
 
 select * from users;
 
-select table_name from user_tables where table_name like 'MEASUREMENT%';
+select * from Municipalities;
 
-desc measurement_units;
-
-select * from measurement_units;
-
-CREATE TABLE measurement_unit_translations (
-    id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    measurement_unit_id NUMBER NOT NULL,
-    language_id NUMBER NOT NULL,
-    name VARCHAR2(50) NOT NULL,
-    is_active NUMBER(1) DEFAULT 1 NOT NULL,
-    created_at TIMESTAMP(6) NOT NULL,
-    updated_at TIMESTAMP(6) NOT NULL,
-    created_by VARCHAR2(50) NOT NULL,
-    updated_by VARCHAR2(50) NOT NULL,
-    CONSTRAINT fk_mut_measurement_unit FOREIGN KEY (measurement_unit_id) REFERENCES measurement_units(id),
-    CONSTRAINT fk_mut_language FOREIGN KEY (language_id) REFERENCES languages(id),
-    CONSTRAINT uk_mut_measurement_unit_lang UNIQUE (measurement_unit_id, language_id)
-);
-
-insert into measurement_unit_translations (measurement_unit_id, language_id, name, is_active, created_by, updated_by, created_at, updated_at)
-values (1, 2, 'Kilogram', 1, 'system', 'system', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+select * from users;
 
 commit;
-
-select * from measurement_units;
-

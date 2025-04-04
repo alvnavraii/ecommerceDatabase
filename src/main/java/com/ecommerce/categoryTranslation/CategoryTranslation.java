@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "CATEGORY_TRANSLATIONS", schema = "ecommerce")
+@Table(name = "CATEGORY_TRANSLATIONS")
 @IdClass(CategoryTranslationId.class)
 public class CategoryTranslation {
     @Id

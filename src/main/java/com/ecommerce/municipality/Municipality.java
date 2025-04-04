@@ -25,7 +25,7 @@ import com.ecommerce.province.Province;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "municipalities", schema = "ecommerce")
+@Table(name = "municipalities")
 public class Municipality {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

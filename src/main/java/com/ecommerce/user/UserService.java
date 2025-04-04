@@ -60,8 +60,8 @@ public class UserService {
                 .lastName(request.getLastName())
                 .phone(request.getPhone())
                 .avatarUrl(request.getAvatarUrl())
-                .isActive(request.isActive() ? 1 : 0)
-                .isAdmin(request.isAdmin() ? 1 : 0)
+                .active(request.isActive())
+                .admin(request.isAdmin())
                 .audit(audit)
                 .build();
 
@@ -88,7 +88,7 @@ public class UserService {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new OracleException("ORA-01403", "No se ha encontrado el usuario"));
 
-        user.setIsActive(0);
+        user.setActive(false);
         String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
         user.getAudit().setUpdatedBy(currentUser);
         user.getAudit().setUpdatedAt(LocalDateTime.now());
@@ -115,7 +115,7 @@ public class UserService {
         if (request.getAvatarUrl() != null) {
             user.setAvatarUrl(request.getAvatarUrl());
         }
-        user.setIsActive(request.isActive() ? 1 : 0);
-        user.setIsAdmin(request.isAdmin() ? 1 : 0);
+        user.setActive(request.isActive());
+        user.setAdmin(request.isAdmin());
     }
 }

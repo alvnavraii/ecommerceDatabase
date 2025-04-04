@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class CreateLanguageRequest {
     private String code;
     private String name;
+    private String nativeName;
+    private String flagUrl;
 }

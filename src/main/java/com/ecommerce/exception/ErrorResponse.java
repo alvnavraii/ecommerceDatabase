@@ -18,19 +18,19 @@ public class ErrorResponse {
     private String error;
     private String message;
     private String path;
-    private String oracleCode;
-    private String oracleMessage;
+    private String pgCode;
+    private String pgMessage;
     private LocalDateTime timestamp;
 
-    public static ErrorResponse ofOracle(String oracleCode, String oracleMessage, String path) {
-        String fullOracleCode = "ORA-" + oracleCode;
+    public static ErrorResponse ofDatabase(String pgCode, String pgMessage, String path) {
+        String fullPgCode = "PSQL-" + pgCode;
         return ErrorResponse.builder()
                 .status(409)
-                .error("Oracle Error")
-                .message(fullOracleCode + ": " + oracleMessage)
+                .error("Database Error")
+                .message(fullPgCode + ": " + pgMessage)
                 .path(path)
-                .oracleCode(fullOracleCode)
-                .oracleMessage(oracleMessage)
+                .pgCode(fullPgCode)
+                .pgMessage(pgMessage)
                 .timestamp(LocalDateTime.now())
                 .build();
     }

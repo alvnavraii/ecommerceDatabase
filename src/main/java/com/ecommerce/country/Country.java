@@ -19,6 +19,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -31,13 +32,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "COUNTRIES", schema = "ecommerce",
+@Table(name = "countries",
        uniqueConstraints = {
-           @UniqueConstraint(name = "UK_COUNTRY_CODE", columnNames = "CODE")
+           @UniqueConstraint(name = "uk_country_code", columnNames = "CODE")
        })
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "country_seq")
+    @SequenceGenerator(name = "country_seq", sequenceName = "country_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "CODE", nullable = false)

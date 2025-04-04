@@ -23,7 +23,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "measurement_units", schema = "ecommerce")
+@Table(name = "measurement_units")
 public class MeasurementUnit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

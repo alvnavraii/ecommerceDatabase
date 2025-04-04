@@ -66,6 +66,8 @@ public class LanguageService {
         Language language = Language.builder()
                 .code(request.getCode())
                 .name(request.getName())
+                .nativeName(request.getNativeName())
+                .flagUrl(request.getFlagUrl())
                 .isActive(true)
                 .audit(Audit.builder()
                         .createdAt(now)
@@ -93,6 +95,14 @@ public class LanguageService {
 
         if (request.getName() != null) {
             language.setName(request.getName());
+        }
+        
+        if (request.getNativeName() != null) {
+            language.setNativeName(request.getNativeName());
+        }
+        
+        if (request.getFlagUrl() != null) {
+            language.setFlagUrl(request.getFlagUrl());
         }
 
         if (request.getIsActive() != null) {

@@ -20,6 +20,8 @@ public class ErrorResponse {
     private String path;
     private String oracleCode;
     private String oracleMessage;
+    private String pgCode;
+    private String pgMessage;
 
     public static ErrorResponse of(HttpStatus status, String message, String path) {
         return ErrorResponse.builder()
@@ -42,6 +44,19 @@ public class ErrorResponse {
                 .path(path)
                 .oracleCode(oracleCode)
                 .oracleMessage(oracleMessage)
+                .build();
+    }
+
+    public static ErrorResponse ofDatabase(String pgCode, String pgMessage, String path) {
+        String fullPgCode = "PSQL-" + pgCode;
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(409)  // Conflict
+                .error("Database Error")
+                .message(String.format("%s: %s", fullPgCode, pgMessage))
+                .path(path)
+                .pgCode(fullPgCode)
+                .pgMessage(pgMessage)
                 .build();
     }
 }

@@ -31,8 +31,8 @@ public class UserResponse {
                 .lastName(user.getLastName())
                 .phone(user.getPhone())
                 .avatarUrl(user.getAvatarUrl())
-                .isActive(user.getIsActive() == 1)
-                .isAdmin(user.getIsAdmin() == 1)
+                .isActive(user.isActive())
+                .isAdmin(user.isAdmin())
                 .audit(AuditResponse.fromAudit(user.getAudit()))
                 .build();
     }

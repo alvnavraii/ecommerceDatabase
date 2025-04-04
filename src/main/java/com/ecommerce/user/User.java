@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,44 +21,45 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "USERS", schema = "ecommerce")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     
-    @Column(name = "PASSWORD_HASH", nullable = false)
     private String password;
     
-    @Column(name = "FIRST_NAME", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
     
-    @Column(name = "LAST_NAME", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
     
     private String phone;
     
-    @Column(name = "AVATAR_URL")
+    @Column(name = "avatar_url")
     private String avatarUrl;
     
-    @Column(name = "IS_ACTIVE", nullable = false)
-    private Integer isActive;
+    @Builder.Default
+    @Column(name = "active")
+    private boolean active = true;
 
-    @Column(name = "IS_ADMIN", nullable = false)
-    private Integer isAdmin;
+    @Builder.Default
+    @Column(name = "admin")
+    private boolean admin = false;
 
     @Embedded
     private Audit audit;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (isAdmin == 1) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
-        return Collections.emptyList();
+        return isAdmin() 
+            ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
+            : Collections.emptyList();
     }
 
     @Override
@@ -82,10 +84,14 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive == 1;
+        return isActive();
+    }
+
+    public boolean isActive() {
+        return Boolean.TRUE.equals(active);
     }
 
     public boolean isAdmin() {
-        return isAdmin == 1;
+        return Boolean.TRUE.equals(admin);
     }
 }

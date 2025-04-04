@@ -23,7 +23,7 @@ import com.ecommerce.municipality.Municipality;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "addresses", schema = "ecommerce")
+@Table(name = "addresses")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

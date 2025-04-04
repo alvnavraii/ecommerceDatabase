@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ecommerce.common.exception.OracleException;
-import com.ecommerce.exception.ErrorResponse;
+import com.ecommerce.common.dto.ErrorResponse;
 
 import jakarta.persistence.EntityNotFoundException;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
@@ -63,8 +64,8 @@ public class GlobalExceptionHandler {
         if (message.contains("uk_category_translation")) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(ErrorResponse.ofOracle(
-                            "0001",
+                    .body(ErrorResponse.ofDatabase(
+                            "23505",  // Código PostgreSQL para violación de unicidad
                             "Violación de restricción única (CATEGORY_TRANSLATIONS.UK_CATEGORY_TRANSLATION)",
                             request.getRequestURI()));
         }
@@ -115,8 +116,8 @@ public class GlobalExceptionHandler {
             HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
-                .body(ErrorResponse.ofOracle(
-                        "1031",
+                .body(ErrorResponse.ofDatabase(
+                        "42501",  // Código PostgreSQL para privilegios insuficientes
                         "Privilegios insuficientes",
                         request.getRequestURI()));
     }
@@ -127,8 +128,8 @@ public class GlobalExceptionHandler {
             HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .body(ErrorResponse.ofOracle(
-                        "1017",
+                .body(ErrorResponse.ofDatabase(
+                        "28P01",  // Código PostgreSQL para autenticación fallida
                         "Nombre de usuario/contraseña no válidos; inicio de sesión denegado",
                         request.getRequestURI()));
     }

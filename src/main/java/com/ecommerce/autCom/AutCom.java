@@ -33,6 +33,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import jakarta.persistence.SequenceGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,14 +43,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "autonomous_communities", schema = "ecommerce",
+@Table(name = "autonomous_communities",
        uniqueConstraints = {
            @UniqueConstraint(name = "uk_aut_com_code", columnNames = "code")
        })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AutCom {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aut_com_seq")
+    @SequenceGenerator(name = "aut_com_seq", sequenceName = "aut_com_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "code", nullable = false)

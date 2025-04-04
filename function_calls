@@ -1,0 +1,4 @@
+<invoke name="codebase_search">
+<parameter name="query">CORS configuration WebSecurityConfig</parameter>
+<parameter name="explanation">Buscar la configuración de CORS en el proyecto</parameter>
+</invoke> 

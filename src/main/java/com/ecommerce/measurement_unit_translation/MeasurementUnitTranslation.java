@@ -25,7 +25,7 @@ import com.ecommerce.language.Language;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "measurement_unit_translations", schema = "ecommerce")
+@Table(name = "measurement_unit_translations")
 public class MeasurementUnitTranslation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

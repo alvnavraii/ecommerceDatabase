@@ -16,6 +16,8 @@ public class LanguageResponse {
     private Long id;
     private String code;
     private String name;
+    private String nativeName;
+    private String flagUrl;
     private Boolean isActive;
     private AuditResponse audit;
 
@@ -24,6 +26,8 @@ public class LanguageResponse {
                 .id(language.getId())
                 .code(language.getCode())
                 .name(language.getName())
+                .nativeName(language.getNativeName())
+                .flagUrl(language.getFlagUrl())
                 .isActive(language.getIsActive())
                 .audit(AuditResponse.fromAudit(language.getAudit()))
                 .build();
