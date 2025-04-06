@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS" value="./logs" />
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Desactivar logs detallados de Spring Boot Auto-Configuration -->
+    <logger name="org.springframework.boot.autoconfigure" level="ERROR"/>
+    
+    <!-- Desactivar logs específicos de condiciones -->
+    <logger name="org.springframework.boot.autoconfigure.condition" level="ERROR"/>
+    
+    <!-- Logs de SQL solo en nivel DEBUG -->
+    <logger name="org.hibernate.SQL" level="INFO"/>
+    <logger name="org.hibernate.type" level="INFO"/>
+    
+    <!-- Configuración general -->
+    <root level="INFO">
+        <appender-ref ref="Console" />
+    </root>
+</configuration> 

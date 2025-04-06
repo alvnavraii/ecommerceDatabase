@@ -3,16 +3,19 @@ package com.ecommerce.config;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
-@Converter(autoApply = true)
-public class BooleanToIntegerConverter implements AttributeConverter<Boolean, Character> {
+// Desactivamos la conversión automática porque ya no la necesitamos
+@Converter(autoApply = false)
+public class BooleanToIntegerConverter implements AttributeConverter<Boolean, Boolean> {
 
     @Override
-    public Character convertToDatabaseColumn(Boolean attribute) {
-        return (attribute != null && attribute) ? 't' : 'f';
+    public Boolean convertToDatabaseColumn(Boolean attribute) {
+        // Simplemente pasar el valor booleano sin conversión
+        return attribute;
     }
 
     @Override
-    public Boolean convertToEntityAttribute(Character dbData) {
-        return dbData != null && dbData.equals('t');
+    public Boolean convertToEntityAttribute(Boolean dbData) {
+        // Simplemente pasar el valor booleano sin conversión
+        return dbData;
     }
 } 

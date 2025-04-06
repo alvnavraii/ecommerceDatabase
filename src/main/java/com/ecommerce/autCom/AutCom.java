@@ -31,8 +31,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import jakarta.persistence.SequenceGenerator;
 
 import java.util.ArrayList;
@@ -47,7 +45,6 @@ import java.util.List;
        uniqueConstraints = {
            @UniqueConstraint(name = "uk_aut_com_code", columnNames = "code")
        })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AutCom {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aut_com_seq")
