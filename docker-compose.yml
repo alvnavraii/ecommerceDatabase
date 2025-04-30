@@ -10,6 +10,26 @@ services:
       - "5433:5432"
     volumes:
       - postgres_ecommerce_data:/var/lib/postgresql/data
+    networks:
+      - ecommerce_network
+
+  app:
+    build: .
+    container_name: ecommerce_app
+    depends_on:
+      - postgres_ecommerce
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_ecommerce:5432/ecommerce?stringtype=unspecified
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - ecommerce_network
 
 volumes:
   postgres_ecommerce_data: 
+
+networks:
+  ecommerce_network:
+    driver: bridge
