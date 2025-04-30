@@ -15,4 +15,9 @@ public class CreateCategoryRequest {
 
     @NotBlank(message = "El slug es requerido")
     private String slug;
+
+    @NotBlank(message = "El nombre es requerido")
+    private String name;
+
+    private String description;
 }

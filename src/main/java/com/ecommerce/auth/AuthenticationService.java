@@ -68,7 +68,6 @@ public class AuthenticationService {
                     .token(jwtToken)
                     .build();
         } catch (AuthenticationException e) {
-            // Log the specific error
             System.out.println("Authentication failed: " + e.getMessage());
             throw e;
         }

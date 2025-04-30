@@ -2,6 +2,7 @@ package com.ecommerce.category;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -9,10 +10,13 @@ import com.ecommerce.common.Audit;
 
 @Entity
 @Table(name = "CATEGORIES")
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@EqualsAndHashCode(exclude = {"parent", "children"})
+@Slf4j
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,17 +27,38 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID", insertable = false, updatable = false)
+    @ToString.Exclude
     private Category parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Category> children;
 
     @Column(name = "SLUG", nullable = false, unique = true)
     private String slug;
+
+    @Column(name = "NAME")
+    private String name;
+
+    @Column(name = "DESCRIPTION")
+    private String description;
 
     @Column(name = "IS_ACTIVE", nullable = false)
     private Boolean isActive;
 
     @Embedded
     private Audit audit;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+               "id=" + id +
+               ", parentId=" + parentId +
+               ", slug='" + slug + '\'' +
+               ", name='" + name + '\'' +
+               ", description='" + description + '\'' +
+               ", isActive=" + isActive +
+               ", audit=" + audit +
+               '}';
+    }
 }

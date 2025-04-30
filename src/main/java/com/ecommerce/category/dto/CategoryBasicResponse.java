@@ -10,6 +10,8 @@ import lombok.Data;
 public class CategoryBasicResponse {
     private Long id;
     private String slug;
+    private String name;
+    private String description;
     private Boolean isActive;
 
     public static CategoryBasicResponse fromEntity(Category entity) {
@@ -17,6 +19,8 @@ public class CategoryBasicResponse {
         return CategoryBasicResponse.builder()
                 .id(entity.getId())
                 .slug(entity.getSlug())
+                .name(entity.getName())
+                .description(entity.getDescription())
                 .isActive(entity.getIsActive())
                 .build();
     }

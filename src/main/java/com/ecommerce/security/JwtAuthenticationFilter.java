@@ -41,14 +41,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         
+        log.info("Received Authorization header: {}", authHeader);
+        
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            log.warn("No valid Authorization header found");
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
             final String jwt = authHeader.substring(7);
+            log.info("Extracted JWT token: {}", jwt);
+            
             final String userEmail = jwtService.extractUsername(jwt);
+            log.info("Extracted username from token: {}", userEmail);
 
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
@@ -63,6 +69,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             new WebAuthenticationDetailsSource().buildDetails(request)
                     );
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                    log.info("Authentication successful for user: {}", userEmail);
+                } else {
+                    log.warn("Token validation failed for user: {}", userEmail);
                 }
             }
             filterChain.doFilter(request, response);
@@ -79,6 +88,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             objectMapper.writeValue(response.getOutputStream(), errorResponse);
+        } catch (Exception e) {
+            log.error("Error processing JWT token: {}", e.getMessage(), e);
+            throw e;
         }
     }
 }
