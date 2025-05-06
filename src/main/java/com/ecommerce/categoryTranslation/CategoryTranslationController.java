@@ -18,6 +18,11 @@ import java.util.List;
 public class CategoryTranslationController {
     private final CategoryTranslationService categoryTranslationService;
 
+    @GetMapping
+    public ResponseEntity<List<CategoryTranslationResponse>> getAllCategoryTranslations() {
+        return ResponseEntity.ok(categoryTranslationService.findAll());
+    }
+    
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<CategoryTranslationResponse>> getCategoryTranslations(@PathVariable Long categoryId) {
         return ResponseEntity.ok(categoryTranslationService.getCategoryTranslations(categoryId));
